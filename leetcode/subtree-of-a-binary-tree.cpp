@@ -36,38 +36,26 @@ class Solution
 public:
     bool isSametree(TreeNode *root1, TreeNode *root2)
     {
-        if (root1 == nullptr && root2 == nullptr)
-        {
+        if (!root1 && !root2)
+        { // MODIFIED: not necessary to equal nullptr for non-null check
             return true;
         }
-        else if (root1 == nullptr || root2 == nullptr)
-        {
-            return false;
-        }
-        if (root1->val == root2->val)
-        {
+        if (root1 && root2 && root1->val == root2->val)
+        { // MODIFIED: also check if both roots are non-null
             return isSametree(root1->left, root2->left) && isSametree(root1->right, root2->right);
         }
         return false;
     }
     bool isSubtree(TreeNode *root, TreeNode *subRoot)
     {
-        if (root == nullptr)
+        if (!root)
         {
             return false;
         }
-        else if (subRoot == nullptr)
-        {
+        else if (!subRoot || isSametree(root, subRoot))
+        { // MODIFIED: shorter logic for possible trues
             return true;
         }
-
-        if (isSametree(root, subRoot))
-        {
-            return true;
-        }
-        else
-        {
-            return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
-        }
+        return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
     }
 };

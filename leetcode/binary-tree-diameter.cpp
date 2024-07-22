@@ -40,23 +40,27 @@ class Solution
 public:
     int diameterOfBinaryTree(TreeNode *root)
     {
-        // base case
         int res = 0;
         dfs(root, res);
         return res;
     }
+    // MODIFIED: int& res added
     int dfs(TreeNode *node, int &res)
-    { // MODIFIED: int& res added
+    {
+        // MODIFIED: this is node, not root (root is the input parame for diameterOfBinaryTree)
         if (!node)
-        { // MODDIFIED: this is node, not root
-            return 0;
+        {
+            return 0; // base case: if node is null, return 0
         }
 
+        // left and right are the depths of the left and right subtrees
         int left = dfs(node->left, res);
         int right = dfs(node->right, res);
 
+        // update the result if the current path is longer
         res = max(res, left + right);
 
+        // return the depth of the subtree rooted at the current node
         return 1 + max(left, right);
     }
 };

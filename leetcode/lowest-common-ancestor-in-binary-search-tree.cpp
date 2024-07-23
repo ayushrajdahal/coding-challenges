@@ -41,23 +41,18 @@ public:
     TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
     {
 
-        // base case
-        if (root == nullptr)
-        {
-            return nullptr;
-        }
-
         // if both nodes have values greater than root, call function by passing right as root
 
         if ((p->val > root->val) && (q->val > root->val))
         {
             return lowestCommonAncestor(root->right, p, q);
         }
-        else if ((p->val < root->val) && (q->val < root->val)) // same for smaller values
-        {
+        else if ((p->val < root->val) && (q->val < root->val))
+        { // same for smaller
             return lowestCommonAncestor(root->left, p, q);
         }
 
+        // serves as a base case because even when root is nullptr, nullptr is returned
         return root;
     }
 };

@@ -33,15 +33,9 @@
 class Solution {
 public:
     int minCostClimbingStairs(vector<int>& cost) {
-        int currIndex;
-        return min(minCostClimbingStairsHelper(cost, 0), minCostClimbingStairsHelper(cost, 1));
-    }
-
-    int minCostClimbingStairsHelper(vector<int>& cost, int currIndex) {
-        if (currIndex < cost.size()) {
-            return min(minCostClimbingStairsHelper(cost, currIndex+1), minCostClimbingStairsHelper(cost, currIndex+2)) + cost[currIndex];
-        } else {
-            return 0;
+        for (int i = cost.size(); i >= 0; i--) {
+            cost[i] += min(cost[i+1], cost[i+2]);
         }
+        return min(cost[0], cost[1]);
     }
 };

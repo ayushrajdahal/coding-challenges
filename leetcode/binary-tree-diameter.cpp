@@ -35,32 +35,30 @@
  * };
  */
 
-class Solution
-{
+class Solution {
 public:
-    int diameterOfBinaryTree(TreeNode *root)
-    {
-        int res = 0;
-        dfs(root, res);
-        return res;
+    int diameterOfBinaryTree(TreeNode* root) {
+        int largestDiameter = 0;
+        dfs(root, largestDiameter);
+        return largestDiameter;
     }
-    // MODIFIED: int& res added
-    int dfs(TreeNode *node, int &res)
-    {
-        // MODIFIED: this is node, not root (root is the input parame for diameterOfBinaryTree)
-        if (!node)
-        {
-            return 0; // base case: if node is null, return 0
+
+private:
+    int dfs(TreeNode* curr, int& largestDiameter) { // NOTE: largestDiameter is passed by reference
+        
+        // base case
+        if (!curr) {
+            return 0;
         }
 
-        // left and right are the depths of the left and right subtrees
-        int left = dfs(node->left, res);
-        int right = dfs(node->right, res);
+        // recursively calculate the height of the left and right subtrees
+        int left = dfs(curr->left, largestDiameter);
+        int right = dfs(curr->right, largestDiameter);
 
-        // update the result if the current path is longer
-        res = max(res, left + right);
+        // update if the current node has a larger diameter
+        largestDiameter = max(largestDiameter, left+right);
 
-        // return the depth of the subtree rooted at the current node
+        // return the max height of the current node
         return 1 + max(left, right);
     }
 };
